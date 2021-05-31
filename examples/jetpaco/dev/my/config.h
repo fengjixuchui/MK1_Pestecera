@@ -15,6 +15,7 @@
 //#define VENG_SELECTOR 					// Very advanced!
 //#define USE_MAP_CUSTOM_DECODER
 #define GENERAL_ENEMS_BASE_CELL 	8 		// Don't touch this unless you know what you are doing
+//#define MIN_FAPS_PER_FRAME 		2		// frame cap, *limits* to 50/N fps.
 
 #define BLACK_PEN 					5		// Which palette entry is black
 
@@ -67,7 +68,7 @@
 //#define REVERSE_OBJECTS_COUNT 			// Counts from PLAYER_NUM_OBJETOS to 0
 //#define DEACTIVATE_EVIL_TILE				// If defined, no killing tiles (behaviour 1) are detected.
 //#define PLAYER_BOUNCES					// If defined, collisions make player bounce
-#define FULL_BOUNCE 						// If defined, evil tile bounces equal MAX_VX, otherwise v/2
+//#define FULL_BOUNCE 						// If defined, evil tile bounces equal MAX_VX, otherwise v/2
 //#define SLOW_DRAIN						// Works with bounces. Drain is 4 times slower
 #define PLAYER_FLICKERS 					// If defined, collisions make player flicker instead.
 //#define MAP_BOTTOM_KILLS					// If defined, exiting the map bottomwise kills.
@@ -84,6 +85,7 @@
 //#define DEATH_COUNT_ADD 			11 		// Frames to wait = ADD + (rand & AND)
 //#define PURSUERS_MAX_V 			4		// 1, 2, 4.
 //#define PURSUERS_BASE_CELL		3		// If defined, type 7 enemies are always #
+//#define PURSUERS_DONT_SPAWN_IN_OBSTACLE 	// Move an obstacle to stop spawning
 
 //#define ENABLE_FANTIES					// If defined, Fanties are enabled!
 //#define FANTIES_BASE_CELL 		2		// Base sprite cell (0, 1, 2 or 3)
@@ -176,7 +178,7 @@
 // Top view:
 // ---------
 
-//#define PLAYER_GENITAL				// Enable top view.
+//#define PLAYER_GENITAL					// Enable top view.
 //#define TOP_OVER_SIDE 					// UP/DOWN has priority over LEFT/RIGHT
 //#define PLAYER_BOUNCE_WITH_WALLS			// Bounce when hitting a wall. Only really useful in MOGGY_STYLE mode
 
@@ -268,8 +270,8 @@ extern unsigned char def_keys [0];
 #define OBJECTS_Y					12		// Objects counter character coordinates
 #define OBJECTS_ICON_X				99		// 
 #define OBJECTS_ICON_Y				99		// Objects icon character coordinates (use with ONLY_ONE_OBJECT)
-#define KEYS_X						30		//
-#define KEYS_Y						16		// Keys counter character coordinates
+#define KEYS_X						99		//
+#define KEYS_Y						99		// Keys counter character coordinates
 #define KILLED_X					99		//
 #define KILLED_Y					99		// Kills counter character coordinates
 #define AMMO_X						99		// 
@@ -290,8 +292,7 @@ extern unsigned char def_keys [0];
 //#define USE_AUTO_TILE_SHADOWS 			// Automatic shadows using specially defined tiles 32-47.
 //#define UNPACKED_MAP						// Full, uncompressed maps. Shadows settings are ignored.
 #define PACKED_MAP_ALT_TILE 		19		// If defined, in 16 tiles mode, alt tile (default 19)
-//#define NO_MASKS							// Sprites are rendered using OR instead of masks.
-//#define MASKED_BULLETS					// If needed
+
 //#define PLAYER_CUSTOM_ANIMATION 			// Code your own animation in my/custom_animation.h
 //#define ENABLE_TILANIMS			32		// If defined, animated tiles are enabled.
 											// the value especifies first animated tile pair.

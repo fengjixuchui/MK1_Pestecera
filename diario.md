@@ -619,3 +619,39 @@ Todo lo de arriba lo resolví bien resuelto y eran idioteces de no inicializar l
 ========
 
 Corrección de errores y mejoras miscelaneas. Portado Jet Paco en 0.2. Va todo genial.
+
+20210326
+========
+
+Greenweb me apunta fallos y carencias porque está siendo tan osado como para ponerse a escribir un juego sin documentación. ¡Ole!
+
+Voy a tratar de resolverlas.
+
+20210327
+========
+
+Hoy trataré que `mkts_om.exe` sea capaz de generar `spriteset_mappings.h`. Esto tiene dos trabajos:
+
+- El fácil es que lo genere para el modo `sprites`, con todos los sprites iguales.
+- El complicado es que haya un modo para spritesets con tamaños variables, y para ello habrá que leer un script.
+
+Vamos con lo primero intentando que sea reutilizable.
+
+Ahora mismo los sprites se convierten con:
+
+```c
+    ..\utils\mkts_om.exe platform=cpc cpcmode=%cpc_gfx_mode% pal=..\gfx\pal.png mode=sprites in=..\gfx\sprites.png out=..\bin\sprites.bin silent > nul
+```
+
+Podemos añadir un nuevo parámetro `mapping=file.h` y si existe que se genere el código necesario.
+
+20210407
+========
+
+Rehaciendo el loader.
+
+Todo es enorme, incluso la idea de combinar miniload y dx7 para meterlo en la pila ocupa demasiado, así que haré un sistema de un cargador básico y mínimo que cargar en cualquier sitio en que me de acceso libre a todo y un segundo cargador que ya sea el real y que cargue en BA00.
+
+1.- preloadercpc se carga en $200, quita las interrupciones, y carga el cargador real en $BA00
+2.- el cargador real carga pantalla en DX7, descomprime, carga jueg en $40, descomprime, y ejecuta.
+

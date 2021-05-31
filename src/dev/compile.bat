@@ -4,8 +4,6 @@
 if [%1]==[help] goto :help
 
 set game=lala_beta
-
-rem For mode 1 change this and replace 'gfx' with 'gfx1' below
 set cpc_gfx_mode=0
 
 if [%1]==[justcompile] goto :compile
@@ -35,7 +33,7 @@ echo Importando GFX
 ..\utils\mkts_om.exe platform=cpc cpcmode=%cpc_gfx_mode% pal=..\gfx\pal.png mode=chars in=..\gfx\font.png out=..\bin\font.bin silent > nul
 ..\utils\mkts_om.exe platform=cpc cpcmode=%cpc_gfx_mode% pal=..\gfx\pal.png mode=strait2x2 in=..\gfx\work.png out=..\bin\work.bin silent > nul
 
-..\utils\mkts_om.exe platform=cpc cpcmode=%cpc_gfx_mode% pal=..\gfx\pal.png mode=sprites in=..\gfx\sprites.png out=..\bin\sprites.bin silent > nul
+..\utils\mkts_om.exe platform=cpc cpcmode=%cpc_gfx_mode% pal=..\gfx\pal.png mode=sprites in=..\gfx\sprites.png out=..\bin\sprites.bin mappings=assets\spriteset_mappings.h silent > nul
 
 ..\utils\mkts_om.exe platform=cpc cpcmode=%cpc_gfx_mode% pal=..\gfx\pal.png mode=sprites in=..\gfx\sprites_extra.png out=..\bin\sprites_extra.bin silent > nul
 ..\utils\mkts_om.exe platform=cpc cpcmode=%cpc_gfx_mode% pal=..\gfx\pal.png mode=sprites in=..\gfx\sprites_bullet.png out=..\bin\sprites_bullet.bin metasize=1,1 silent > nul
@@ -80,21 +78,23 @@ del ..\bin\loading.c.bin >nul 2>nul
 del ..\bin\%game%.c.bin >nul 2>nul
 ..\utils\zx7.exe %game%.bin ..\bin\%game%.c.bin > nul
 
-set loader_org=$aa00
-rem $aa00 = 43520
-
 ..\utils\imanol.exe in=loader\loadercpc.asm-orig out=loader\loadercpc.asm ^
-	binsize=?..\bin\%game%.c.bin ^
 	scrc_size=?..\bin\loading.c.bin ^
-	mainbin_addr=?43520-..\bin\%game%.c.bin ^
 	mainbin_size=?..\bin\%game%.c.bin ^
-	loader_org=%loader_org% ^
+	loading_palette=!..\gfx\pal_loading.png ^
 	loader_mode=%cpc_gfx_mode% > nul
 ..\utils\pasmo.exe loader\loadercpc.asm ..\bin\loader.bin  > nul
 
-..\utils\2cdt.exe -n -r %game% -s 1 -X %loader_org% -L %loader_org% ..\bin\loader.bin %game%.cdt  > nul
-..\utils\2cdt.exe -r scr -s 1 -m 2 ..\bin\loading.c.bin %game%.cdt  > nul
-..\utils\2cdt.exe -r game -s 1 -m 2 ..\bin\%game%.c.bin %game%.cdt  > nul
+..\utils\imanol.exe in=loader\preloadercpc.asm-orig out=loader\preloadercpc.asm ^
+	loader_size=?..\bin\loader.bin ^
+	loader_mode=%cpc_gfx_mode% > nul
+..\utils\pasmo.exe loader\preloadercpc.asm ..\bin\preloader.bin  > nul
+
+del %game%.cdt > nul
+..\utils\cpc2cdt.exe -r %game% -m cpc -l 1024 -x 1024 -p 2000 ..\bin\preloader.bin %game%.cdt
+..\utils\cpc2cdt.exe -r LOADER -m raw1full -rl 740 -p 2000 ..\bin\loader.bin %game%.cdt
+..\utils\cpc2cdt.exe -r SCR -m raw1full -rl 740 -p 2000 ..\bin\loading.c.bin %game%.cdt
+..\utils\cpc2cdt.exe -r MAIN -m raw1full -rl 740 -p 2000 ..\bin\%game%.c.bin %game%.cdt
 
 goto :end 
 

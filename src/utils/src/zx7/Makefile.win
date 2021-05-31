@@ -4,11 +4,11 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = zx7.o compress.o optimize.o
-LINKOBJ  = zx7.o compress.o optimize.o
-LIBS     = -L"c:/devcpp/MinGW64/x86_64-w64-mingw32/lib32" -static-libgcc -m32
-INCS     = -I"c:/devcpp/MinGW64/include" -I"c:/devcpp/MinGW64/x86_64-w64-mingw32/include" -I"c:/devcpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
-CXXINCS  = -I"c:/devcpp/MinGW64/include" -I"c:/devcpp/MinGW64/x86_64-w64-mingw32/include" -I"c:/devcpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"c:/devcpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
+OBJ      = compress.o optimize.o zx7.o
+LINKOBJ  = compress.o optimize.o zx7.o
+LIBS     = -L"C:/Archivos de programa/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -static-libgcc -m32
+INCS     = -I"C:/Archivos de programa/Dev-Cpp/MinGW64/include" -I"C:/Archivos de programa/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Archivos de programa/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"C:/Archivos de programa/Dev-Cpp/MinGW64/include" -I"C:/Archivos de programa/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Archivos de programa/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Archivos de programa/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
 BIN      = zx7.exe
 CXXFLAGS = $(CXXINCS) -m32
 CFLAGS   = $(INCS) -m32
@@ -24,11 +24,11 @@ clean: clean-custom
 $(BIN): $(OBJ)
 	$(CC) $(LINKOBJ) -o $(BIN) $(LIBS)
 
-zx7.o: zx7.c
-	$(CC) -c zx7.c -o zx7.o $(CFLAGS)
-
 compress.o: compress.c
 	$(CC) -c compress.c -o compress.o $(CFLAGS)
 
 optimize.o: optimize.c
 	$(CC) -c optimize.c -o optimize.o $(CFLAGS)
+
+zx7.o: zx7.c
+	$(CC) -c zx7.c -o zx7.o $(CFLAGS)
